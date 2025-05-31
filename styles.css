@@ -188,6 +188,39 @@ main {
     display: block;
 }
 
+/* Courses Section */
+#courses h2 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    color: #1A1A1A;
+}
+#courses .subheader {
+    color: #6B7280;
+}
+.course-chip {
+    background: #FFFFFF;
+    border: 1px solid #E5E7EB;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 10px;
+    transition: all 0.3s ease;
+}
+.course-chip:hover {
+    transform: scale(1.05);
+}
+.course-chip i {
+    color: #2EC4B6;
+    margin-right: 5px;
+}
+.course-chip p {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    color: #2EC4B6;
+    font-size: 14px;
+    margin: 0;
+}
+
 /* Portfolio Section */
 .portfolio-card {
     background: #FFFFFF;
@@ -225,6 +258,45 @@ main {
     background: #26A69A;
 }
 
+/* Contact Section */
+#contact h2 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    color: #1A1A1A;
+}
+.contact-form {
+    background: #FFFFFF;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #E5E7EB;
+}
+.contact-form .form-label {
+    color: #1A1A1A;
+}
+.contact-form .form-control {
+    border: 1px solid #E5E7EB;
+    border-radius: 8px;
+}
+.contact-form .btn-primary {
+    background: #2EC4B6;
+    border: none;
+    border-radius: 8px;
+}
+.contact-form .btn-primary:hover {
+    background: #26A69A;
+}
+.contact-info a {
+    color: #2EC4B6;
+    text-decoration: none;
+}
+.contact-info i {
+    color: #2EC4B6;
+    transition: all 0.3s ease;
+}
+.contact-info i:hover {
+    color: #26A69A;
+}
+
 /* Footer */
 .footer {
     background: #FFFFFF;
@@ -252,7 +324,7 @@ main {
     #home .lead {
         font-size: 16px;
     }
-    .tool-card {
+    .tool-card, .course-chip {
         margin: 5px;
     }
     .profile-img {
