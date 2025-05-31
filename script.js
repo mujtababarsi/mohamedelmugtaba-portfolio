@@ -19,6 +19,8 @@ document.querySelectorAll('.nav-link').forEach(link => {
             const collapse = new bootstrap.Collapse(mobileNav, { toggle: false });
             collapse.hide();
         }
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 });
 
@@ -32,4 +34,5 @@ document.querySelector('.cta-btn').addEventListener('click', (e) => {
     });
     document.getElementById('portfolio').classList.add('active');
     document.querySelector('.nav-link[data-tab="portfolio"]').classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 });
