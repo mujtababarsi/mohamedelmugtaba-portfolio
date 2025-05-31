@@ -23,24 +23,12 @@
                 </div>
                 <div class="col-6 col-md-9 text-end">
                     <ul class="nav nav-tabs d-none d-md-flex">
-                        <li class="nav-item">
-                            <a class="nav-link active" data-tab="home">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-tab="about">About</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-tab="tools">Tools</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-tab="courses">Courses</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-tab="portfolio">Portfolio</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-tab="contact">Contact</a>
-                        </li>
+                        <li class="nav-item"><a class="nav-link active" data-tab="home">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" data-tab="about">About</a></li>
+                        <li class="nav-item"><a class="nav-link" data-tab="tools">Tools</a></li>
+                        <li class="nav-item"><a class="nav-link" data-tab="courses">Courses</a></li>
+                        <li class="nav-item"><a class="nav-link" data-tab="portfolio">Portfolio</a></li>
+                        <li class="nav-item"><a class="nav-link" data-tab="contact">Contact</a></li>
                     </ul>
                     <button class="d-md-none hamburger" type="button" data-bs-toggle="collapse" data-bs-target="#mobileNav">
                         <i class="fas fa-bars"></i>
@@ -132,6 +120,40 @@
             </div>
         </section>
 
+        <!-- Courses Tab -->
+        <section id="courses" class="tab-content">
+            <div class="container py-5">
+                <h2 class="text-center">Courses</h2>
+                <p class="text-center subheader">Courses shaping my expertise</p>
+                <div class="row mt-4 justify-content-center">
+                    <div class="col-6 col-md-4 course-chip">
+                        <i class="fas fa-book fa-lg"></i>
+                        <p>Introduction to Bioinformatics</p>
+                    </div>
+                    <div class="col-6 col-md-4 course-chip">
+                        <i class="fas fa-book fa-lg"></i>
+                        <p>Bioinformatics for Biologist</p>
+                    </div>
+                    <div class="col-6 col-md-4 course-chip">
+                        <i class="fas fa-book fa-lg"></i>
+                        <p>Pharmaceutical Marketing</p>
+                    </div>
+                    <div class="col-6 col-md-4 course-chip">
+                        <i class="fas fa-book fa-lg"></i>
+                        <p>Total Quality Management</p>
+                    </div>
+                    <div class="col-6 col-md-4 course-chip">
+                        <i class="fas fa-book fa-lg"></i>
+                        <p>Drug Information Resources</p>
+                    </div>
+                    <div class="col-6 col-md-4 course-chip">
+                        <i class="fas fa-book fa-lg"></i>
+                        <p>Kaggle Python Course</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Portfolio Tab -->
         <section id="portfolio" class="tab-content">
             <div class="container py-5">
@@ -151,11 +173,47 @@
             </div>
         </section>
 
+        <!-- Contact Tab -->
+        <section id="contact" class="tab-content">
+            <div class="container py-5">
+                <h2 class="text-center">Contact Me</h2>
+                <div class="row mt-4 justify-content-center">
+                    <div class="col-md-6">
+                        <form class="contact-form">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" class="form-control" id="name" placeholder="Your Name">
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" placeholder="Your Email">
+                            </div>
+                            <div class="mb-3">
+                                <label for="subject" class="form-label">Subject</label>
+                                <input type="text" class="form-control" id="subject" placeholder="Subject">
+                            </div>
+                            <div class="mb-3">
+                                <label for="message" class="form-label">Message</label>
+                                <textarea class="form-control" id="message" rows="4" placeholder="Your Message"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Send Message</button>
+                        </form>
+                        <div class="contact-info mt-4 text-center">
+                            <p>Email: <a href="mailto:mujtababarci@gmail.com">mujtababarci@gmail.com</a></p>
+                            <a href="https://github.com/mujtababarsi" target="_blank"><i class="fab fa-github fa-lg mx-2"></i></a>
+                            <!-- Add LinkedIn URL here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Footer -->
         <footer class="footer">
             <div class="container text-center">
                 <p>© 2025 Mohamedelmugtaba. All rights reserved.</p>
                 <a href="https://github.com/mujtababarsi" target="_blank"><i class="fab fa-github fa-lg mx-2"></i></a>
+                <!-- Add LinkedIn URL here -->
             </div>
         </footer>
     </main>
