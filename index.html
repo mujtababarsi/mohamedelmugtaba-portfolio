@@ -8,6 +8,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts: Inter, Roboto -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -15,9 +17,11 @@
     <!-- Tab Navigation -->
     <nav class="tab-bar">
         <div class="container">
-            <div class="row">
-                <div class="col-12 d-flex justify-content-between align-items-center">
+            <div class="row align-items-center">
+                <div class="col-6 col-md-3">
                     <div class="nav-brand">Mohamedelmugtaba</div>
+                </div>
+                <div class="col-6 col-md-9 text-end">
                     <ul class="nav nav-tabs d-none d-md-flex">
                         <li class="nav-item">
                             <a class="nav-link active" data-tab="home">Home</a>
@@ -38,30 +42,19 @@
                             <a class="nav-link" data-tab="contact">Contact</a>
                         </li>
                     </ul>
-                    <!-- Mobile Hamburger -->
                     <button class="d-md-none hamburger" type="button" data-bs-toggle="collapse" data-bs-target="#mobileNav">
                         <i class="fas fa-bars"></i>
                     </button>
                 </div>
             </div>
-            <!-- Mobile Dropdown -->
             <div class="collapse" id="mobileNav">
                 <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link active" data-tab="home">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-tab="about">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-tab="tools">Tools</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-tab="courses">Courses</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-tab="portfolio">Contact</a>
-                    </li>
+                    <li class="nav-item"><a class="nav-link active" data-tab="home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" data-tab="about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" data-tab="tools">Tools</a></li>
+                    <li class="nav-item"><a class="nav-link" data-tab="courses">Courses</a></li>
+                    <li class="nav-item"><a class="nav-link" data-tab="portfolio">Portfolio</a></li>
+                    <li class="nav-item"><a class="nav-link" data-tab="contact">Contact</a></li>
                 </ul>
             </div>
         </div>
@@ -72,23 +65,28 @@
         <!-- Home Tab -->
         <section id="home" class="tab-content active">
             <div class="container h-100 d-flex flex-column justify-content-center align-items-center text-center">
-                <h1 class="display-4">Mohamedelmugtaba | Bioinformatics & Pharmacy Specialist</h1>
-                <p class="lead">Advancing health science through data-driven bioinformatics and pharmaceutical expertise.</p>
-                <a href="#" class="btn cta-btn" data-tab="portfolio">Explore My Projects</a>
+                <h1>Mohamedelmugtaba</h1>
+                <p class="lead">Bioinformatics & Pharmacy Specialist</p>
+                <a href="#" class="btn cta-btn" data-tab="portfolio">Explore Projects</a>
+                <div class="dna-animation">
+                    <svg viewBox="0 0 100 20" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0 10 Q25 0 50 10 T100 10" stroke="#2EC4B6" stroke-width="2" fill="none" class="dna-strand"/>
+                    </svg>
+                </div>
             </div>
         </section>
 
         <!-- About Tab -->
         <section id="about" class="tab-content">
-            <div class="container h-100">
-                <div class="row h-100 align-items-center">
+            <div class="container py-5">
+                <h2 class="text-center">About Me</h2>
+                <div class="row mt-4">
                     <div class="col-md-6">
-                        <h2>About Me</h2>
-                        <p>Compiling and interpreting bioinformatics information by leveraging software, statistics and data mining. Effective at maintaining current understanding of field trends, technological advances and new computational and modeling techniques. specializing in single cell analysis.</p>
-                        <p>With several years of experience in Pharmaceuticals in general, it's time for me to expand my drug discovery and bioinformatics knowledge outside drug manufacturing to have a real impact on health science utilize cuttingedge technologies. I believe bioinformatics can integrate my passion for technology and data analysis and my concrete background in pharmacy. Enthusiastically pursued self-guided learning in software technologies, particularly Python, to explore their applications in bioinformatics. Actively engaged in data analysis courses offered by NBIS (National Bioinformatics Infrastructure Sweden), significantly expanding my analytical skills and knowledge to a very advanced. Nevertheless elevate my skills on Linux and R-rstudio and others software tools, and practice it on real data and projects and shared on Github for better communications with Bioinformatics communities and receiving advices. My goal is to effectively leverage my computational skills and contribute to building an innovative and creative work environment.</p>
+                        <p>Compiling and interpreting bioinformatics information by leveraging software, statistics, and data mining. Specializing in single-cell analysis with a focus on cutting-edge computational techniques.</p>
+                        <p>With years of pharmaceutical experience, I’m transitioning to bioinformatics to drive health science innovation. My passion for technology and pharmacy fuels my expertise in Python, Linux, and R-Studio. Through self-guided learning and NBIS courses, I’ve honed advanced analytical skills, applied in real-world projects shared on GitHub. My goal is to create impactful solutions in a collaborative environment.</p>
                     </div>
                     <div class="col-md-6 text-center">
-                        <img src="https://via.placeholder.com/300" alt="Profile Placeholder" class="img-fluid rounded-circle">
+                        <img src="https://via.placeholder.com/300" alt="Profile" class="img-fluid profile-img">
                     </div>
                 </div>
             </div>
@@ -96,39 +94,39 @@
 
         <!-- Tools Tab -->
         <section id="tools" class="tab-content">
-            <div class="container h-100 d-flex flex-column justify-content-center">
+            <div class="container py-5">
                 <h2 class="text-center">Bioinformatics Tools</h2>
-                <p class="text-center subheader">Core tools powering my bioinformatics workflows.</p>
-                <div class="row mt-4">
-                    <div class="col-md-4 col-6 text-center tool-card">
-                        <i class="fab fa-python fa-3x"></i>
+                <p class="text-center subheader">Core tools for my workflows</p>
+                <div class="row mt-4 justify-content-center">
+                    <div class="col-6 col-md-2 tool-card">
+                        <i class="fab fa-python fa-2x"></i>
                         <p>Python</p>
-                        <div class="tooltip">Versatile programming language for bioinformatics and data analysis.</div>
+                        <div class="tooltip">Versatile language for bioinformatics</div>
                     </div>
-                    <div class="col-md-4 col-6 text-center tool-card">
-                        <i class="fas fa-book fa-3x"></i>
+                    <div class="col-6 col-md-2 tool-card">
+                        <i class="fas fa-book fa-2x"></i>
                         <p>Jupyter</p>
-                        <div class="tooltip">Interactive notebooks for data visualization and analysis.</div>
+                        <div class="tooltip">Interactive data analysis</div>
                     </div>
-                    <div class="col-md-4 col-6 text-center tool-card">
-                        <i class="fab fa-linux fa-3x"></i>
+                    <div class="col-6 col-md-2 tool-card">
+                        <i class="fab fa-linux fa-2x"></i>
                         <p>Linux</p>
-                        <div class="tooltip">Command-line environment for bioinformatics workflows.</div>
+                        <div class="tooltip">Command-line workflows</div>
                     </div>
-                    <div class="col-md-4 col-6 text-center tool-card">
-                        <i class="fas fa-code fa-3x"></i>
+                    <div class="col-6 col-md-2 tool-card">
+                        <i class="fas fa-code fa-2x"></i>
                         <p>R-Studio</p>
-                        <div class="tooltip">IDE for R programming and statistical analysis.</div>
+                        <div class="tooltip">Statistical analysis IDE</div>
                     </div>
-                    <div class="col-md-4 col-6 text-center tool-card">
-                        <i class="fas fa-dna fa-3x"></i>
+                    <div class="col-6 col-md-2 tool-card">
+                        <i class="fas fa-dna fa-2x"></i>
                         <p>Scanpy</p>
-                        <div class="tooltip">Python library for single-cell RNA-seq analysis.</div>
+                        <div class="tooltip">Single-cell RNA-seq analysis</div>
                     </div>
-                    <div class="col-md-4 col-6 text-center tool-card">
-                        <i class="fas fa-network-wired fa-3x"></i>
+                    <div class="col-6 col-md-2 tool-card">
+                        <i class="fas fa-network-wired fa-2x"></i>
                         <p>Scarf</p>
-                        <div class="tooltip">Efficient single-cell data analysis with low memory usage.</div>
+                        <div class="tooltip">Efficient single-cell analysis</div>
                     </div>
                 </div>
             </div>
@@ -136,15 +134,15 @@
 
         <!-- Portfolio Tab -->
         <section id="portfolio" class="tab-content">
-            <div class="container h-100 d-flex flex-column justify-content-center">
+            <div class="container py-5">
                 <h2 class="text-center">Portfolio</h2>
                 <div class="row mt-4">
                     <div class="col-md-4 col-12 mb-4">
-                        <div class="card portfolio-card">
+                        <div class="portfolio-card">
                             <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Project 1">
                             <div class="card-body">
-                                <h5 class="card-title">Covid-19 Single-Cell Analysis</h5>
-                                <p class="card-text">Analysis of single-cell RNA sequencing data for COVID-19 samples using Scanpy.</p>
+                                <h5>Covid-19 Single-Cell Analysis</h5>
+                                <p>Single-cell RNA-seq analysis using Scanpy.</p>
                                 <a href="https://github.com/mujtababarsi/Covid-19-single-cell-analysis-Scanpy" class="btn btn-primary" target="_blank">View on GitHub</a>
                             </div>
                         </div>
@@ -155,13 +153,9 @@
 
         <!-- Footer -->
         <footer class="footer">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12 text-center">
-                        <p>© 2025 Mohamedelmugtaba. All rights reserved.</p>
-                        <a href="https://github.com/mujtababarsi" target="_blank"><i class="fab fa-github fa-lg mx-2"></i></a>
-                    </div>
-                </div>
+            <div class="container text-center">
+                <p>© 2025 Mohamedelmugtaba. All rights reserved.</p>
+                <a href="https://github.com/mujtababarsi" target="_blank"><i class="fab fa-github fa-lg mx-2"></i></a>
             </div>
         </footer>
     </main>
