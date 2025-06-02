@@ -3,225 +3,908 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mohamedelmugtaba | Bioinformatics Portfolio</title>
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome 6 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- Google Fonts: Inter, Roboto -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="styles.css">
+    <title>Evolve & Elevate Portfolio</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+    <style>
+        /* Global styles for body and fonts */
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+            margin: 0;
+            padding: 0;
+            background-color: #f7fafc; /* Default background for seamless look */
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+        }
+        /* Custom scrollbar for better aesthetics */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+        /* Keyframes for Hero Section background gradient animation */
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        /* Initial state for individual characters in Hero headline for GSAP */
+        .char {
+            display: inline-block;
+            opacity: 0;
+        }
+        /* Keyframes for general fade-in-up effect used by some elements */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
 <body>
-    <!-- Tab Navigation -->
-    <nav class="tab-bar">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-6 col-md-3">
-                    <div class="nav-brand">Mohamedelmugtaba</div>
-                </div>
-                <div class="col-6 col-md-9 text-end">
-                    <ul class="nav nav-tabs d-none d-md-flex">
-                        <li class="nav-item"><a class="nav-link active" data-tab="home">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" data-tab="about">About</a></li>
-                        <li class="nav-item"><a class="nav-link" data-tab="tools">Tools</a></li>
-                        <li class="nav-item"><a class="nav-link" data-tab="courses">Courses</a></li>
-                        <li class="nav-item"><a class="nav-link" data-tab="portfolio">Portfolio</a></li>
-                        <li class="nav-item"><a class="nav-link" data-tab="contact">Contact</a></li>
-                    </ul>
-                    <button class="d-md-none hamburger" type="button" data-bs-toggle="collapse" data-bs-target="#mobileNav">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="collapse" id="mobileNav">
-                <ul class="nav flex-column">
-                    <li class="nav-item"><a class="nav-link active" data-tab="home">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" data-tab="about">About</a></li>
-                    <li class="nav-item"><a class="nav-link" data-tab="tools">Tools</a></li>
-                    <li class="nav-item"><a class="nav-link" data-tab="courses">Courses</a></li>
-                    <li class="nav-item"><a class="nav-link" data-tab="portfolio">Portfolio</a></li>
-                    <li class="nav-item"><a class="nav-link" data-tab="contact">Contact</a></li>
+    <div id="root"></div>
+
+    <script src="https://unpkg.com/react/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom/umd/react-dom.production.min.js"></script>
+
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script src="https://unpkg.com/framer-motion@latest/dist/framer-motion.umd.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <script type="text/babel">
+        // Destructure necessary modules from global window objects
+        const { useState, useEffect, useRef } = React;
+        const { motion, AnimatePresence, useScroll, useTransform } = window.FramerMotion;
+        const { gsap } = window;
+        // Correctly access ScrollTrigger from the gsap object
+        const { ScrollTrigger } = gsap; 
+
+        // Register GSAP plugins (important for ScrollTrigger to work)
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Utility function to generate placeholder images
+        const getPlaceholderImage = (width, height, text) => {
+          const bgColor = 'cccccc';
+          const textColor = '333333';
+          return `https://placehold.co/${width}x${height}/${bgColor}/${textColor}?text=${encodeURIComponent(text)}`;
+        };
+
+        // --- Reusable UI Components ---
+
+        const Button = ({ children, className = '', onClick }) => (
+          <motion.button
+            className={`px-6 py-3 rounded-full font-semibold text-lg transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 ${className}`}
+            whileHover={{ scale: 1.05, boxShadow: '0 8px 16px rgba(0,0,0,0.2)' }}
+            whileTap={{ scale: 0.95 }}
+            onClick={onClick}
+          >
+            {children}
+          </motion.button>
+        );
+
+        const Card = ({ children, className = '' }) => (
+          <motion.div
+            className={`bg-white rounded-xl shadow-lg p-6 ${className}`}
+            whileHover={{ translateY: -5, boxShadow: '0 12px 24px rgba(0,0,0,0.15)' }}
+            transition={{ duration: 0.3 }}
+          >
+            {children}
+          </motion.div>
+        );
+
+        // --- Layout Components ---
+
+        const Header = () => {
+          const [isScrolled, setIsScrolled] = useState(false);
+          const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+          useEffect(() => {
+            const handleScroll = () => {
+              setIsScrolled(window.scrollY > 50);
+            };
+            window.addEventListener('scroll', handleScroll);
+            // Cleanup: remove event listener when component unmounts
+            return () => window.removeEventListener('scroll', handleScroll);
+          }, []); // Empty dependency array means this runs once on mount
+
+          const navLinks = [
+            { name: 'Home', href: '#hero' },
+            { name: 'About', href: '#about' },
+            { name: 'Portfolio', href: '#portfolio' },
+            { name: 'Services', href: '#services' },
+            { name: 'Testimonials', href: '#testimonials' },
+            { name: 'Contact', href: '#contact' },
+          ];
+
+          return (
+            <motion.header
+              className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+                isScrolled ? 'bg-gray-900 bg-opacity-90 shadow-xl py-3' : 'bg-transparent py-6'
+              }`}
+              initial={{ y: -100 }}
+              animate={{ y: 0 }}
+              transition={{ type: 'spring', stiffness: 120, damping: 20 }}
+            >
+              <nav className="container mx-auto px-4 flex justify-between items-center">
+                <a href="#hero" className="text-white text-3xl font-bold font-poppins">
+                  Evolve<span className="text-teal-400">.</span>
+                </a>
+
+                {/* Desktop Navigation */}
+                <ul className="hidden md:flex space-x-8">
+                  {navLinks.map((link) => (
+                    <li key={link.name}> {/* Key prop for list items */}
+                      <a
+                        href={link.href}
+                        className="text-white text-lg font-inter relative group"
+                      >
+                        {link.name}
+                        {/* Underline animation on hover */}
+                        <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-teal-400 transition-all duration-300 group-hover:w-full"></span>
+                      </a>
+                    </li>
+                  ))}
                 </ul>
-            </div>
-        </div>
-    </nav>
 
-    <!-- Tab Content -->
-    <main>
-        <!-- Home Tab -->
-        <section id="home" class="tab-content active">
-            <div class="container h-100 d-flex flex-column justify-content-center align-items-center text-center">
-                <h1>Mohamedelmugtaba</h1>
-                <p class="lead">Bioinformatics & Pharmacy Specialist</p>
-                <a href="#" class="btn cta-btn" data-tab="portfolio">Explore Projects</a>
-                <div class="dna-animation">
-                    <svg viewBox="0 0 100 20" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M0 10 Q25 0 50 10 T100 10" stroke="#2EC4B6" stroke-width="2" fill="none" class="dna-strand"/>
-                    </svg>
+                {/* Mobile Menu Button */}
+                <button
+                  className="md:hidden text-white focus:outline-none"
+                  onClick={() => setIsMenuOpen(!isMenuOpen)}
+                  aria-label="Toggle navigation menu"
+                >
+                  <svg
+                    className="w-8 h-8"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    {isMenuOpen ? (
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M6 18L18 6M6 6l12 12"
+                      ></path>
+                    ) : (
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M4 6h16M4 12h16M4 18h16"
+                      ></path>
+                    )}
+                  </svg>
+                </button>
+              </nav>
+
+              {/* Mobile Menu */}
+              <AnimatePresence>
+                {isMenuOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="md:hidden bg-gray-800 bg-opacity-95 py-4"
+                  >
+                    <ul className="flex flex-col items-center space-y-4">
+                      {navLinks.map((link) => (
+                        <li key={link.name}> {/* Key prop for list items */}
+                          <a
+                            href={link.href}
+                            className="text-white text-xl font-inter block py-2"
+                            onClick={() => setIsMenuOpen(false)} // Close menu on link click
+                          >
+                            {link.name}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.header>
+          );
+        };
+
+        const Footer = () => (
+          <footer className="bg-gray-900 text-gray-400 py-8 text-center font-inter">
+            <div className="container mx-auto px-4">
+              <p>&copy; {new Date().getFullYear()} Evolve & Elevate. All rights reserved.</p>
+              <p className="mt-2 text-sm">Designed with passion, built with React.</p>
+            </div>
+          </footer>
+        );
+
+        // --- Sections ---
+
+        const HeroSection = () => {
+          const textRef = useRef(null);
+          const taglineRef = useRef(null);
+          const ctaRef = useRef(null);
+
+          useEffect(() => {
+            // Create a GSAP timeline for sequential animations
+            const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+            // Animate headline characters
+            if (textRef.current) {
+              const chars = textRef.current.querySelectorAll('.char');
+              tl.fromTo(
+                chars,
+                { opacity: 0, y: 50, rotateX: -90 },
+                {
+                  opacity: 1,
+                  y: 0,
+                  rotateX: 0,
+                  stagger: 0.05,
+                  duration: 0.8,
+                }
+              );
+            }
+
+            // Animate tagline after headline
+            if (taglineRef.current) {
+              tl.fromTo(
+                taglineRef.current,
+                { opacity: 0, y: 50 },
+                { opacity: 1, y: 0, duration: 1 },
+                '-=0.5' // Start 0.5s before headline animation finishes
+              );
+            }
+
+            // Animate CTA buttons after tagline
+            if (ctaRef.current) {
+              tl.fromTo(
+                ctaRef.current.children, // Target the direct children (buttons)
+                { opacity: 0, y: 50 },
+                { opacity: 1, y: 0, duration: 0.8, stagger: 0.2 },
+                '-=0.6' // Start 0.6s before tagline animation finishes
+              );
+            }
+
+            // Cleanup: kill the timeline on component unmount to prevent memory leaks
+            return () => {
+              tl.kill();
+            };
+          }, []); // Empty dependency array means this runs once on mount
+
+          // Style for the animated gradient background
+          const gradientStyle = {
+            background: 'linear-gradient(45deg, #1A202C, #2D3748, #00C4CC, #FFA07A)',
+            backgroundSize: '400% 400%',
+            animation: 'gradientAnimation 15s ease infinite',
+          };
+
+          return (
+            <section
+              id="hero"
+              className="relative h-screen flex items-center justify-center text-center text-white overflow-hidden"
+              style={gradientStyle}
+            >
+              <div className="relative z-10 px-4">
+                <h1
+                  ref={textRef}
+                  className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-poppins font-extrabold leading-tight mb-6"
+                >
+                  {/* Split text into characters for individual animation */}
+                  {'Crafting Digital Experiences That Connect & Inspire'.split('').map((char, i) => (
+                    <span key={i} className="char"> {/* Key prop for mapped elements */}
+                      {char === ' ' ? '\u00A0' : char} {/* Preserve spaces */}
+                    </span>
+                  ))}
+                </h1>
+                <p ref={taglineRef} className="text-lg sm:text-xl md:text-2xl font-inter max-w-3xl mx-auto mb-10 opacity-0">
+                  I transform visions into captivating digital realities, blending aesthetics with functionality for impactful results.
+                </p>
+                <div ref={ctaRef}>
+                  <Button className="bg-teal-500 text-white hover:bg-teal-600 mr-4">
+                    View My Portfolio
+                  </Button>
+                  <Button className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-gray-900">
+                    Let's Collaborate
+                  </Button>
                 </div>
-            </div>
-        </section>
+              </div>
+              {/* Scroll down indicator with bounce animation */}
+              <motion.a
+                href="#about"
+                className="absolute bottom-10 animate-bounce text-white text-3xl"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 2.5, duration: 0.5 }}
+                aria-label="Scroll down to About section"
+              >
+                &#x2193; {/* Unicode down arrow */}
+              </motion.a>
+            </section>
+          );
+        };
 
-        <!-- About Tab -->
-        <section id="about" class="tab-content">
-            <div class="container py-5">
-                <h2 class="text-center">About Me</h2>
-                <div class="row mt-4">
-                    <div class="col-md-6">
-                        <p>Compiling and interpreting bioinformatics information by leveraging software, statistics, and data mining. Specializing in single-cell analysis with a focus on cutting-edge computational techniques.</p>
-                        <p>With years of pharmaceutical experience, I’m transitioning to bioinformatics to drive health science innovation. My passion for technology and pharmacy fuels my expertise in Python, Linux, and R-Studio. Through self-guided learning and NBIS courses, I’ve honed advanced analytical skills, applied in real-world projects shared on GitHub. My goal is to create impactful solutions in a collaborative environment.</p>
+        const AboutSection = () => {
+          // Framer Motion hook to get scroll progress
+          const { scrollYProgress } = useScroll();
+          // Transform scroll progress to create a parallax effect on the image
+          const y = useTransform(scrollYProgress, [0, 1], ['-10%', '10%']); 
+
+          return (
+            <section id="about" className="py-20 bg-gray-50 font-inter">
+              <div className="container mx-auto px-4">
+                <motion.h2
+                  className="text-4xl md:text-5xl font-poppins font-bold text-center text-gray-800 mb-12"
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.5 }} // Trigger when 50% of element is in view
+                  transition={{ duration: 0.6 }}
+                >
+                  About <span className="text-teal-500">Me</span>
+                </motion.h2>
+
+                <div className="flex flex-col md:flex-row items-center md:space-x-12">
+                  <motion.div
+                    className="md:w-1/2 mb-8 md:mb-0 relative overflow-hidden rounded-xl shadow-xl"
+                    initial={{ opacity: 0, x: -100 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, amount: 0.5 }}
+                    transition={{ duration: 0.8 }}
+                    style={{ y }} // Apply parallax to the image container
+                  >
+                    <img
+                      src={getPlaceholderImage(600, 400, 'Designer Photo')}
+                      alt="Professional photo of the designer"
+                      className="w-full h-auto object-cover rounded-xl"
+                    />
+                  </motion.div>
+
+                  <div className="md:w-1/2">
+                    <motion.p
+                      className="text-lg text-gray-700 leading-relaxed mb-6"
+                      initial={{ opacity: 0, x: 100 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true, amount: 0.5 }}
+                      transition={{ duration: 0.8, delay: 0.2 }}
+                    >
+                      Hello! I'm a passionate web designer and developer with a knack for creating intuitive,
+                      visually stunning, and high-performing digital experiences. My journey in design began
+                      with a fascination for how aesthetics and functionality intertwine to solve real-world problems.
+                    </motion.p>
+                    <motion.p
+                      className="text-lg text-gray-700 leading-relaxed mb-8"
+                      initial={{ opacity: 0, x: 100 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true, amount: 0.5 }}
+                      transition={{ duration: 0.8, delay: 0.4 }}
+                    >
+                      With a strong foundation in UI/UX principles, modern front-end technologies, and a keen eye for detail,
+                      I strive to build websites that not only look exceptional but also deliver seamless user journeys.
+                      Let's build something amazing together!
+                    </motion.p>
+
+                    <motion.h3
+                      className="text-2xl font-poppins font-semibold text-gray-800 mb-6"
+                      initial={{ opacity: 0, y: 30 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, amount: 0.5 }}
+                      transition={{ duration: 0.6, delay: 0.6 }}
+                    >
+                      My Core Skills
+                    </motion.h3>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                      {['UI/UX Design', 'Web Development', 'Motion Graphics', 'Branding', 'Responsive Design', 'Prototyping'].map((skill, index) => (
+                        <motion.div
+                          key={skill} // Key prop for mapped elements
+                          className="bg-white p-4 rounded-lg shadow-md flex items-center space-x-3"
+                          initial={{ opacity: 0, scale: 0.8 }}
+                          whileInView={{ opacity: 1, scale: 1 }}
+                          viewport={{ once: true, amount: 0.3 }}
+                          transition={{ duration: 0.5, delay: 0.1 * index }} // Staggered animation
+                          whileHover={{ translateY: -3, boxShadow: '0 6px 12px rgba(0,0,0,0.1)' }}
+                        >
+                          <span className="text-teal-500 text-2xl">✨</span> {/* Placeholder icon */}
+                          <span className="text-gray-800 font-medium">{skill}</span>
+                        </motion.div>
+                      ))}
                     </div>
-                    <div class="col-md-6 text-center">
-                        <img src="https://via.placeholder.com/300" alt="Profile" class="img-fluid profile-img">
-                    </div>
+                  </div>
                 </div>
-            </div>
-        </section>
+              </div>
+            </section>
+          );
+        };
 
-        <!-- Tools Tab -->
-        <section id="tools" class="tab-content">
-            <div class="container py-5">
-                <h2 class="text-center">Bioinformatics Tools</h2>
-                <p class="text-center subheader">Core tools for my workflows</p>
-                <div class="row mt-4 justify-content-center">
-                    <div class="col-6 col-md-2 tool-card">
-                        <i class="fab fa-python fa-2x"></i>
-                        <p>Python</p>
-                        <div class="tooltip">Versatile language for bioinformatics</div>
-                    </div>
-                    <div class="col-6 col-md-2 tool-card">
-                        <i class="fas fa-book fa-2x"></i>
-                        <p>Jupyter</p>
-                        <div class="tooltip">Interactive data analysis</div>
-                    </div>
-                    <div class="col-6 col-md-2 tool-card">
-                        <i class="fab fa-linux fa-2x"></i>
-                        <p>Linux</p>
-                        <div class="tooltip">Command-line workflows</div>
-                    </div>
-                    <div class="col-6 col-md-2 tool-card">
-                        <i class="fas fa-code fa-2x"></i>
-                        <p>R-Studio</p>
-                        <div class="tooltip">Statistical analysis IDE</div>
-                    </div>
-                    <div class="col-6 col-md-2 tool-card">
-                        <i class="fas fa-dna fa-2x"></i>
-                        <p>Scanpy</p>
-                        <div class="tooltip">Single-cell RNA-seq analysis</div>
-                    </div>
-                    <div class="col-6 col-md-2 tool-card">
-                        <i class="fas fa-network-wired fa-2x"></i>
-                        <p>Scarf</p>
-                        <div class="tooltip">Efficient single-cell analysis</div>
-                    </div>
+        const projects = [
+          {
+            id: 1,
+            title: 'E-commerce Redesign',
+            category: 'Web Design',
+            image: getPlaceholderImage(800, 600, 'E-commerce Redesign'),
+            description: 'A complete overhaul of an existing e-commerce platform, focusing on improved user experience and conversion rates.',
+          },
+          {
+            id: 2,
+            title: 'Mobile App Concept',
+            category: 'Mobile App',
+            image: getPlaceholderImage(800, 600, 'Mobile App Concept'),
+            description: 'Designed a sleek and intuitive mobile application for a fitness tracking service, emphasizing gamification.',
+          },
+          {
+            id: 3,
+            title: 'Brand Identity Creation',
+            category: 'Branding',
+            image: getPlaceholderImage(800, 600, 'Brand Identity Creation'),
+            description: 'Developed a comprehensive brand identity, including logo, color palette, and typography, for a tech startup.',
+          },
+          {
+            id: 4,
+            title: 'SaaS Dashboard UI',
+            category: 'Web Design',
+            image: getPlaceholderImage(800, 600, 'SaaS Dashboard UI'),
+            description: 'Crafted a user-friendly and data-rich dashboard interface for a SaaS product, enhancing data visualization.',
+          },
+          {
+            id: 5,
+            title: 'Interactive Landing Page',
+            category: 'Web Development',
+            image: getPlaceholderImage(800, 600, 'Interactive Landing Page'),
+            description: 'Built a highly interactive and animated landing page to promote a new digital product, driving engagement.',
+          },
+          {
+            id: 6,
+            title: 'Portfolio Website V2',
+            category: 'Web Development',
+            image: getPlaceholderImage(800, 600, 'Portfolio Website V2'),
+            description: 'Designed and developed my personal portfolio website, showcasing my skills in design and front-end development.',
+          },
+        ];
+
+        const PortfolioSection = () => {
+          const [filter, setFilter] = useState('All');
+          // Filter projects based on selected category
+          const filteredProjects =
+            filter === 'All' ? projects : projects.filter((p) => p.category === filter);
+
+          const categories = ['All', 'Web Design', 'Mobile App', 'Branding', 'Web Development'];
+
+          return (
+            <section id="portfolio" className="py-20 bg-gray-100 font-inter">
+              <div className="container mx-auto px-4">
+                <motion.h2
+                  className="text-4xl md:text-5xl font-poppins font-bold text-center text-gray-800 mb-12"
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.5 }}
+                  transition={{ duration: 0.6 }}
+                >
+                  My Creative <span className="text-teal-500">Works</span>
+                </motion.h2>
+
+                <div className="flex flex-wrap justify-center gap-3 mb-12">
+                  {categories.map((cat) => (
+                    <Button
+                      key={cat} // Key prop for mapped elements
+                      onClick={() => setFilter(cat)}
+                      className={`${
+                        filter === cat
+                          ? 'bg-teal-500 text-white'
+                          : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                      } px-5 py-2 text-base rounded-full`}
+                    >
+                      {cat}
+                    </Button>
+                  ))}
                 </div>
-            </div>
-        </section>
 
-        <!-- Courses Tab -->
-        <section id="courses" class="tab-content">
-            <div class="container py-5">
-                <h2 class="text-center">Courses</h2>
-                <p class="text-center subheader">Courses shaping my expertise</p>
-                <div class="row mt-4 justify-content-center">
-                    <div class="col-6 col-md-4 course-chip">
-                        <i class="fas fa-book fa-lg"></i>
-                        <p>Introduction to Bioinformatics</p>
-                    </div>
-                    <div class="col-6 col-md-4 course-chip">
-                        <i class="fas fa-book fa-lg"></i>
-                        <p>Bioinformatics for Biologist</p>
-                    </div>
-                    <div class="col-6 col-md-4 course-chip">
-                        <i class="fas fa-book fa-lg"></i>
-                        <p>Pharmaceutical Marketing</p>
-                    </div>
-                    <div class="col-6 col-md-4 course-chip">
-                        <i class="fas fa-book fa-lg"></i>
-                        <p>Total Quality Management</p>
-                    </div>
-                    <div class="col-6 col-md-4 course-chip">
-                        <i class="fas fa-book fa-lg"></i>
-                        <p>Drug Information Resources</p>
-                    </div>
-                    <div class="col-6 col-md-4 course-chip">
-                        <i class="fas fa-book fa-lg"></i>
-                        <p>Kaggle Python Course</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Portfolio Tab -->
-        <section id="portfolio" class="tab-content">
-            <div class="container py-5">
-                <h2 class="text-center">Portfolio</h2>
-                <div class="row mt-4">
-                    <div class="col-md-4 col-12 mb-4">
-                        <div class="portfolio-card">
-                            <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Project 1">
-                            <div class="card-body">
-                                <h5>Covid-19 Single-Cell Analysis</h5>
-                                <p>Single-cell RNA-seq analysis using Scanpy.</p>
-                                <a href="https://github.com/mujtababarsi/Covid-19-single-cell-analysis-Scanpy" class="btn btn-primary" target="_blank">View on GitHub</a>
-                            </div>
+                {/* Framer Motion's layout prop enables smooth reordering animations */}
+                <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  <AnimatePresence> {/* Enables exit animations for removed components */}
+                    {filteredProjects.map((project) => (
+                      <motion.div
+                        key={project.id} // Unique key for each project for AnimatePresence
+                        layout // Enables layout animations
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.8 }}
+                        transition={{ duration: 0.4 }}
+                        className="relative bg-white rounded-xl shadow-lg overflow-hidden group cursor-pointer"
+                      >
+                        <img
+                          src={project.image}
+                          alt={project.title}
+                          className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105"
+                        />
+                        <div className="p-6">
+                          <h3 className="text-2xl font-poppins font-semibold text-gray-800 mb-2">
+                            {project.title}
+                          </h3>
+                          <p className="text-gray-600 text-base">{project.description}</p>
                         </div>
+                        {/* Overlay on hover for project details */}
+                        <motion.div
+                          className="absolute inset-0 bg-gray-900 bg-opacity-75 flex flex-col items-center justify-center p-4 text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                          initial={{ opacity: 0 }}
+                          whileHover={{ opacity: 1 }}
+                        >
+                          <h3 className="text-white text-2xl font-poppins font-bold mb-2">
+                            {project.title}
+                          </h3>
+                          <p className="text-gray-300 text-sm mb-4">{project.category}</p>
+                          <Button className="bg-teal-500 text-white hover:bg-teal-600">
+                            View Case Study
+                          </Button>
+                        </motion.div>
+                      </motion.div>
+                    ))}
+                  </AnimatePresence>
+                </motion.div>
+              </div>
+            </section>
+          );
+        };
+
+        const services = [
+          {
+            title: 'UI/UX Design',
+            description: 'Crafting intuitive and engaging user interfaces and experiences.',
+            icon: '💡', // Placeholder icon
+          },
+          {
+            title: 'Web Development',
+            description: 'Building robust, scalable, and high-performance websites.',
+            icon: '💻',
+          },
+          {
+            title: 'Motion Graphics',
+            description: 'Bringing designs to life with captivating animations and visual effects.',
+            icon: '🎬',
+          },
+          {
+            title: 'Brand Identity',
+            description: 'Developing unique and memorable brand identities that resonate.',
+            icon: '✨',
+          },
+          {
+            title: 'Responsive Design',
+            description: 'Ensuring seamless experiences across all devices and screen sizes.',
+            icon: '📱',
+          },
+          {
+            title: 'Prototyping & Testing',
+            description: 'Creating interactive prototypes and conducting user testing for optimal results.',
+            icon: '🧪',
+          },
+        ];
+
+        const ServicesSection = () => (
+          <section id="services" className="py-20 bg-gray-50 font-inter">
+            <div className="container mx-auto px-4">
+              <motion.h2
+                className="text-4xl md:text-5xl font-poppins font-bold text-center text-gray-800 mb-12"
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.5 }}
+                transition={{ duration: 0.6 }}
+              >
+                What I <span className="text-teal-500">Offer</span>
+              </motion.h2>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {services.map((service, index) => (
+                  <motion.div
+                    key={service.title} // Key prop for mapped elements
+                    className="bg-white rounded-xl shadow-lg p-8 text-center"
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ duration: 0.5, delay: 0.1 * index }} // Staggered animation
+                    whileHover={{ translateY: -5, boxShadow: '0 12px 24px rgba(0,0,0,0.15)' }}
+                  >
+                    <div className="text-5xl mb-4">{service.icon}</div>
+                    <h3 className="text-2xl font-poppins font-semibold text-gray-800 mb-3">
+                      {service.title}
+                    </h3>
+                    <p className="text-gray-600 leading-relaxed">{service.description}</p>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </section>
+        );
+
+        const testimonials = [
+          {
+            quote: "Working with [Designer's Name] was a game-changer for our brand. Their attention to detail and creative vision brought our website to life beyond our expectations.",
+            author: 'Jane Doe',
+            title: 'CEO, Tech Innovations',
+          },
+          {
+            quote: "The mobile app concept they developed was revolutionary. It's intuitive, beautiful, and has significantly improved our user engagement.",
+            author: 'John Smith',
+            title: 'Founder, Fitness Pro',
+          },
+          {
+            quote: "Their ability to translate complex ideas into simple, elegant designs is truly remarkable. A pleasure to collaborate with!",
+            author: 'Emily White',
+            title: 'Marketing Director, Global Solutions',
+          },
+        ];
+
+        const TestimonialsSection = () => (
+          <section id="testimonials" className="py-20 bg-gray-100 font-inter">
+            <div className="container mx-auto px-4">
+              <motion.h2
+                className="text-4xl md:text-5xl font-poppins font-bold text-center text-gray-800 mb-12"
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.5 }}
+                transition={{ duration: 0.6 }}
+              >
+                What Clients <span className="text-teal-500">Say</span>
+              </motion.h2>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {testimonials.map((testimonial, index) => (
+                  <motion.div
+                    key={index} // Key prop for mapped elements
+                    className="bg-white rounded-xl shadow-lg p-8"
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ duration: 0.5, delay: 0.1 * index }}
+                  >
+                    <p className="text-gray-700 text-lg italic mb-6">"{testimonial.quote}"</p>
+                    <div className="font-semibold text-gray-800">{testimonial.author}</div>
+                    <div className="text-gray-500 text-sm">{testimonial.title}</div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </section>
+        );
+
+        const ContactSection = () => {
+          const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+          const [isSubmitted, setIsSubmitted] = useState(false);
+
+          const handleChange = (e) => {
+            const { name, value } = e.target;
+            setFormData((prev) => ({ ...prev, [name]: value }));
+          };
+
+          const handleSubmit = (e) => {
+            e.preventDefault();
+            // In a real application, you would send this data to a backend.
+            console.log('Form submitted:', formData);
+            setIsSubmitted(true);
+            setFormData({ name: '', email: '', message: '' }); // Clear form
+            // Simulate a brief success message display
+            setTimeout(() => setIsSubmitted(false), 3000);
+          };
+
+          const socialLinks = [
+            { name: 'LinkedIn', icon: '🔗', url: '#' }, // Placeholder icon
+            { name: 'Dribbble', icon: '🏀', url: '#' },
+            { name: 'Behance', icon: '🎨', url: '#' },
+            { name: 'GitHub', icon: '🐙', url: '#' },
+          ];
+
+          return (
+            <section id="contact" className="py-20 bg-gray-50 font-inter">
+              <div className="container mx-auto px-4">
+                <motion.h2
+                  className="text-4xl md:text-5xl font-poppins font-bold text-center text-gray-800 mb-12"
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.5 }}
+                  transition={{ duration: 0.6 }}
+                >
+                  Get In <span className="text-teal-500">Touch</span>
+                </motion.h2>
+
+                <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-lg p-8 md:p-12">
+                  {isSubmitted ? (
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.5 }}
+                      className="text-center text-green-600 text-2xl font-poppins font-semibold py-8"
+                    >
+                      🎉 Thank You for Your Message! 🎉
+                      <p className="text-lg text-gray-700 mt-4">I'll get back to you shortly.</p>
+                    </motion.div>
+                  ) : (
+                    <form onSubmit={handleSubmit} className="space-y-6">
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.3 }}
+                        transition={{ duration: 0.5, delay: 0.1 }}
+                      >
+                        <label htmlFor="name" className="block text-gray-700 text-lg font-medium mb-2">
+                          Name
+                        </label>
+                        <input
+                          type="text"
+                          id="name"
+                          name="name"
+                          value={formData.name}
+                          onChange={handleChange}
+                          className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-teal-500 focus:ring-1 focus:ring-teal-500 transition-all duration-200 text-gray-800"
+                          required
+                        />
+                      </motion.div>
+
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.3 }}
+                        transition={{ duration: 0.5, delay: 0.2 }}
+                      >
+                        <label htmlFor="email" className="block text-gray-700 text-lg font-medium mb-2">
+                          Email
+                        </label>
+                        <input
+                          type="email"
+                          id="email"
+                          name="email"
+                          value={formData.email}
+                          onChange={handleChange}
+                          className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-teal-500 focus:ring-1 focus:ring-teal-500 transition-all duration-200 text-gray-800"
+                          required
+                        />
+                      </motion.div>
+
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.3 }}
+                        transition={{ duration: 0.5, delay: 0.3 }}
+                      >
+                        <label htmlFor="message" className="block text-gray-700 text-lg font-medium mb-2">
+                          Message
+                        </label>
+                        <textarea
+                          id="message"
+                          name="message"
+                          value={formData.message}
+                          onChange={handleChange}
+                          rows="5"
+                          className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-teal-500 focus:ring-1 focus:ring-teal-500 transition-all duration-200 text-gray-800"
+                          required
+                        ></textarea>
+                      </motion.div>
+
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.3 }}
+                        transition={{ duration: 0.5, delay: 0.4 }}
+                      >
+                        <Button type="submit" className="w-full bg-teal-500 text-white hover:bg-teal-600">
+                          Send Message
+                        </Button>
+                      </motion.div>
+                    </form>
+                  )}
+
+                  <motion.div
+                    className="mt-12 text-center"
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.5 }}
+                    transition={{ duration: 0.6, delay: 0.5 }}
+                  >
+                    <h3 className="text-2xl font-poppins font-semibold text-gray-800 mb-6">
+                      Connect With Me
+                    </h3>
+                    <div className="flex justify-center space-x-6">
+                      {socialLinks.map((link, index) => (
+                        <motion.a
+                          key={link.name} // Key prop for mapped elements
+                          href={link.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-gray-600 hover:text-teal-500 transition-colors duration-300"
+                          initial={{ opacity: 0, scale: 0.8 }}
+                          whileInView={{ opacity: 1, scale: 1 }}
+                          viewport={{ once: true, amount: 0.3 }}
+                          transition={{ duration: 0.4, delay: 0.1 * index }} // Staggered animation
+                          whileHover={{ scale: 1.2, rotate: 5 }}
+                        >
+                          <span className="text-4xl">{link.icon}</span> {/* Placeholder icon */}
+                          <span className="sr-only">{link.name}</span> {/* For accessibility */}
+                        </motion.a>
+                      ))}
                     </div>
+                  </motion.div>
                 </div>
-            </div>
-        </section>
+              </div>
+            </section>
+          );
+        };
 
-        <!-- Contact Tab -->
-        <section id="contact" class="tab-content">
-            <div class="container py-5">
-                <h2 class="text-center">Contact Me</h2>
-                <div class="row mt-4 justify-content-center">
-                    <div class="col-md-6">
-                        <form class="contact-form">
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Name</label>
-                                <input type="text" class="form-control" id="name" placeholder="Your Name">
-                            </div>
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" placeholder="Your Email">
-                            </div>
-                            <div class="mb-3">
-                                <label for="subject" class="form-label">Subject</label>
-                                <input type="text" class="form-control" id="subject" placeholder="Subject">
-                            </div>
-                            <div class="mb-3">
-                                <label for="message" class="form-label">Message</label>
-                                <textarea class="form-control" id="message" rows="4" placeholder="Your Message"></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Send Message</button>
-                        </form>
-                        <div class="contact-info mt-4 text-center">
-                            <p>Email: <a href="mailto:mujtababarci@gmail.com">mujtababarci@gmail.com</a></p>
-                            <a href="https://github.com/mujtababarsi" target="_blank"><i class="fab fa-github fa-lg mx-2"></i></a>
-                            <!-- Add LinkedIn URL here -->
-                        </div>
-                    </div>
+        // --- Main App Component ---
+
+        const App = () => {
+          const [isLoading, setIsLoading] = useState(true);
+
+          useEffect(() => {
+            // Simulate asset loading time for the preloader
+            const timer = setTimeout(() => {
+              setIsLoading(false);
+            }, 2000); // Adjust loading time as needed
+            // Cleanup: clear timeout if component unmounts before timeout completes
+            return () => clearTimeout(timer);
+          }, []); // Empty dependency array means this runs once on mount
+
+          return (
+            <>
+              {/* Preloader: Only render if isLoading is true */}
+              <AnimatePresence>
+                {isLoading && (
+                  <motion.div
+                    initial={{ opacity: 1 }}
+                    exit={{ opacity: 0, transition: { duration: 0.8, ease: 'easeOut' } }}
+                    className="fixed inset-0 bg-gray-900 flex items-center justify-center z-[9999]"
+                  >
+                    <motion.div
+                      className="w-20 h-20 border-4 border-t-4 border-teal-500 border-t-transparent rounded-full animate-spin"
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{ duration: 0.5, ease: 'easeOut' }}
+                    ></motion.div>
+                    <motion.p
+                      className="text-white text-xl ml-4"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 0.5, duration: 0.5 }}
+                    >
+                      Loading Portfolio...
+                    </motion.p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {/* Main content: Only render if isLoading is false */}
+              {!isLoading && (
+                <div className="min-h-screen flex flex-col">
+                  <Header />
+                  <main className="flex-grow">
+                    <HeroSection />
+                    <AboutSection />
+                    <PortfolioSection />
+                    <ServicesSection />
+                    <TestimonialsSection />
+                    <ContactSection />
+                  </main>
+                  <Footer />
                 </div>
-            </div>
-        </section>
+              )}
+            </>
+          );
+        };
 
-        <!-- Footer -->
-        <footer class="footer">
-            <div class="container text-center">
-                <p>© 2025 Mohamedelmugtaba. All rights reserved.</p>
-                <a href="https://github.com/mujtababarsi" target="_blank"><i class="fab fa-github fa-lg mx-2"></i></a>
-                <!-- Add LinkedIn URL here -->
-            </div>
-        </footer>
-    </main>
-
-    <!-- Bootstrap 5 JS and Popper.js -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
-    <!-- Custom JS -->
-    <script src="script.js"></script>
+        // Render the App component into the 'root' div
+        // This line must be at the very end of your script block
+        ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+    </script>
 </body>
 </html>
+
